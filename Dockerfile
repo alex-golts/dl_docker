@@ -13,7 +13,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	wget \
 	git \
 	nano \
-	byobu
+	byobu \
+	apt-utils
 
 # boost:
 #-------------------
