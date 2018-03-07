@@ -23,11 +23,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends li
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	python-pip \
 	python-dev \
-	python-opencv
+	python-opencv \
+	spyder
 
-RUN pip --no-cache-dir install --upgrade pip
+RUN pip --no-cache-dir install --upgrade pip \
+	setuptools
 RUN pip --no-cache-dir install --upgrade \
-	setuptools \
 	numpy \
 	scipy \
 	pandas \
