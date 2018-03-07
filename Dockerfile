@@ -1,4 +1,4 @@
-FROM nvidia/cuda:8.0-cudnn7-devel
+FROM nvidia/cuda:8.0-cudnn6-devel
 
 RUN rm -rf /var/lib/apt/lists/* \
            /etc/apt/sources.list.d/cuda.list \
