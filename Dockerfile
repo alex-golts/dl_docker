@@ -1,5 +1,9 @@
 FROM nvidia/cuda:8.0-cudnn7-devel
 
+RUN rm -rf /var/lib/apt/lists/* \
+           /etc/apt/sources.list.d/cuda.list \
+           /etc/apt/sources.list.d/nvidia-ml.list && \
+	apt-get update 
 # tools:
 # -----------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
