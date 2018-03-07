@@ -57,7 +57,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	&& \
 	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
     	cd ~/Theano* && \
-    	RUN pip --no-cache-dir install --upgrade . && \
+    	pip --no-cache-dir install --upgrade . && \
 	git clone --depth 10 https://github.com/Theano/libgpuarray ~/gpuarray && \
     	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
     	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
