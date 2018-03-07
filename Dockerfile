@@ -11,7 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	nano
 
 # boost:
--------------------
+#-------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libboost-all-dev
 
 # python:
@@ -35,18 +35,18 @@ RUN pip --no-cache-dir install --upgrade \
 	tensorboardX 
 	
 # pytorch:
--------------------
+#-------------------
 RUN pip --no-cache-dir install --upgrade \
 	http://download.pytorch.org/whl/cu80/torch-0.3.1-cp27-cp27mu-linux_x86_64.whl \
 	torchvision
 
 # tensorflow:
---------------------
+#--------------------
 RUN pip --no-cache-dir install --upgrade tensorflow-gpu
 
 
 # theano:
---------------------
+#--------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libblas-dev \
 	&& \
@@ -68,14 +68,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 
 # keras:
---------------------
+#--------------------
 RUN pip --no-cache-dir install --upgrade \
 	h5py \
 	keras
 
 
 # config & cleanup:
---------------------
+#--------------------
 RUN ldconfig && \
     apt-get clean && \
     apt-get autoremove && \
