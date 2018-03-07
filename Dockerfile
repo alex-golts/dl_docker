@@ -2,7 +2,7 @@ FROM nvidia/cuda:9.0-cudnn7-devel
 
 # tools:
 # -----------------
-DEBIAN_FRONTEND=noninteractive RUN apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	build-essential \
 	ca-certificates \
 	cmake \
@@ -12,11 +12,11 @@ DEBIAN_FRONTEND=noninteractive RUN apt-get install -y --no-install-recommends \
 
 # boost:
 -------------------
-DEBIAN_FRONTEND=noninteractive RUN apt-get install -y --no-install-recommends libboost-all-dev
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libboost-all-dev
 
 # python:
 # -----------------
-DEBIAN_FRONTEND=noninteractive RUN apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	python-pip \
 	python-dev \
 	python-opencv
@@ -47,7 +47,7 @@ RUN pip --no-cache-dir install --upgrade tensorflow-gpu
 
 # theano:
 --------------------
-DEBIAN_FRONTEND=noninteractive RUN apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libblas-dev \
 	&& \
 	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
