@@ -52,18 +52,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	&& \
 	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
     	cd ~/Theano* && \
-    	RUN pip --no-cache-dir install --upgrade \
-        . && \
+    	RUN pip --no-cache-dir install --upgrade . && \
 	git clone --depth 10 https://github.com/Theano/libgpuarray ~/gpuarray && \
     	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
-    	cmake -D CMAKE_BUILD_TYPE=RELEASE \
-          -D CMAKE_INSTALL_PREFIX=/usr/local \
-          .. && \
+    	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
     	make -j"$(nproc)" install && \
     	cd ~/gpuarray && \
     	python setup.py build && \
     	python setup.py install && \
-
     	printf '[global]\nfloatX = float32\ndevice = cuda0\n\n[dnn]\ninclude_path = /usr/local/cuda/targets/x86_64-linux/include\n' > ~/.theanorc 
 
 
