@@ -48,7 +48,7 @@ RUN pip --no-cache-dir install --upgrade \
 
 # tensorflow:
 #--------------------
-RUN pip --no-cache-dir install --upgrade tensorflow-gpu
+RUN pip --no-cache-dir install tensorflow-gpu==1.4.1
 
 
 # theano:
