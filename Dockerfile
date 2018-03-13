@@ -77,25 +77,25 @@ RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
 # theano:
 #--------------------
-RUN pip --no-cache-dir install Theano>=0.8
-RUN pip3 --no-cache-dir install Theano>=0.8
+#RUN pip --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
+#RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	libblas-dev && \
+	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
+	cd ~/Theano* && \
+	pip --no-cache-dir install . && \
+        pip3 --no-cache-dir install . && \
+    	git clone https://github.com/Theano/libgpuarray ~/gpuarray && \
+	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
+	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
+	make -j"$(nproc)" install && \
+	cd ~/gpuarray && \
+	python setup.py build && \
+	python setup.py install && \
+	python3 setup.py build && \
+	python3 setup.py install && \
+	printf '[global]\nfloatX = float32\ndevice = cuda0\n\n[dnn]\ninclude_path = /usr/local/cuda/targets/x86_64-linux/include\n' > ~/.theanorc 
 
-
-#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-#	libblas-dev \
-#	&& \
-#	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
-#    	cd ~/Theano* && \
-#	pip --no-cache-dir install --upgrade nose && \
-#    	pip --no-cache-dir install --upgrade . && \
-#	git clone --depth 10 https://github.com/Theano/libgpuarray ~/gpuarray && \
-#    	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
-#    	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
-#    	make -j"$(nproc)" install && \
-#    	cd ~/gpuarray && \
-#    	python setup.py build && \
-#    	python setup.py install && \
-#    	printf '[global]\nfloatX = float32\ndevice = cuda0\n\n[dnn]\ninclude_path = /usr/local/cuda/targets/x86_64-linux/include\n' > ~/.theanorc 
 
 
 # keras:
