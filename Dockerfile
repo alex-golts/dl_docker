@@ -77,24 +77,24 @@ RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
 # theano:
 #--------------------
-#RUN pip --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
-#RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-	libblas-dev && \
-	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
-	cd ~/Theano* && \
-	pip --no-cache-dir install . && \
-        pip3 --no-cache-dir install . && \
-    	git clone https://github.com/Theano/libgpuarray ~/gpuarray && \
-	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
-	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
-	make -j"$(nproc)" install && \
-	cd ~/gpuarray && \
-	python setup.py build && \
-	python setup.py install && \
-	python3 setup.py build && \
-	python3 setup.py install && \
-	printf '[global]\nfloatX = float32\ndevice = cuda0\n\n[dnn]\ninclude_path = /usr/local/cuda/targets/x86_64-linux/include\n' > ~/.theanorc 
+RUN pip --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
+RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+#	libblas-dev && \
+#	wget -qO- https://github.com/Theano/Theano/archive/rel-1.0.1.tar.gz | tar xz -C ~ && \
+#	cd ~/Theano* && \
+#	pip --no-cache-dir install . && \
+#        pip3 --no-cache-dir install . && \
+#    	git clone https://github.com/Theano/libgpuarray ~/gpuarray && \
+#	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
+#	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
+#	make -j"$(nproc)" install && \
+#	cd ~/gpuarray && \
+#	python setup.py build && \
+#	python setup.py install && \
+#	python3 setup.py build && \
+#	python3 setup.py install 
+#	#printf '[global]\nfloatX = float32\ndevice = cuda0\n\n[dnn]\ninclude_path = /usr/local/#cuda/targets/x86_64-linux/include\n' > ~/.theanorc 
 
 
 
@@ -110,7 +110,8 @@ RUN pip3 --no-cache-dir install --upgrade \
 
 # Other stuff - move to appropriate locations sometime, I put them here just to save time during build:
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl
-
+#ENV CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr/include/
+#ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 # config & cleanup:
 #--------------------
 RUN ldconfig && \
