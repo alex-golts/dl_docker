@@ -108,6 +108,9 @@ RUN pip3 --no-cache-dir install --upgrade \
 	keras
 
 
+# Other stuff - move to appropriate locations sometime, I put them here just to save time during build:
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl
+
 # config & cleanup:
 #--------------------
 RUN ldconfig && \
