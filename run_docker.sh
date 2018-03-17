@@ -13,4 +13,5 @@ nvidia-docker run \
 	-e QT_X11_NO_MITSHM=1 \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v /home/$USER:/home/$USER \
+	--user dluser \
 	dl_docker

@@ -74,6 +74,11 @@ RUN pip3 --no-cache-dir install --upgrade \
 RUN pip --no-cache-dir install tensorflow-gpu==1.4.1
 RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
+ARG HOME=$HOME
+RUN useradd -u 1000 -g 0 -m dluser
+RUN usermod -aG sudo dluser
+#RUN useradd dluser -m -G sudo
+#USER dluser
 
 # theano:
 #--------------------
@@ -109,11 +114,12 @@ RUN pip3 --no-cache-dir install --upgrade \
 
 # Other stuff - move to appropriate locations sometime, I put them here just to save time during build:
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl 
 ENV CPATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr/include/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ADD cudnn-7.0-linux-x64-v4.0-prod.tgz /cudnn_v4
+
 
 # config & cleanup:
 #--------------------
