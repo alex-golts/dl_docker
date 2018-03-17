@@ -5,12 +5,12 @@
 xhost +local:root
 ################################################################################
 
+
 nvidia-docker run \
 	-it \
 	-e USER=$USER \
 	-e DISPLAY=$DISPLAY \
 	-e QT_X11_NO_MITSHM=1 \
-	-e HOME=$HOME \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v /home/$USER:/home/$USER \
 	dl_docker
