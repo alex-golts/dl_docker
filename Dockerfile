@@ -77,6 +77,7 @@ RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 ARG HOME=$HOME
 RUN useradd -u 1000 -g 0 -m dluser
 RUN usermod -aG sudo dluser
+RUN echo 'dluser:dlpass' | chpasswd
 #RUN useradd dluser -m -G sudo
 #USER dluser
 
@@ -120,11 +121,7 @@ ENV CPATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
+RUN apt-get install sudo
 
-# config & cleanup:
-#--------------------
-RUN ldconfig && \
-    apt-get clean && \
-    apt-get autoremove && \
-    rm -rf /var/lib/apt/lists/* /tmp/* ~/*
+
 
