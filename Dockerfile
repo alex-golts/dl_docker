@@ -86,7 +86,7 @@ RUN usermod -aG sudo dluser
 #RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libblas-dev && \
-	wget -qO- https://github.com/Theano/Theano/archive/rel-0.8.0.tar.gz | tar xz -C ~ && \
+	wget -qO- https://github.com/Theano/Theano/archive/rel-0.8.2.tar.gz | tar xz -C ~ && \
 	cd ~/Theano* && \
 	pip --no-cache-dir install . && \
         pip3 --no-cache-dir install . && \
@@ -98,8 +98,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	python setup.py build && \
 	python setup.py install && \
 	python3 setup.py build && \
-	python3 setup.py install && \
-	printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v4/cuda/include\nlibrary_path=/cudnn_v4/cuda/lib64' > ~/.theanorc 
+	python3 setup.py install && \ 
+	printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v5/cuda/include\nlibrary_path=/cudnn_v5/cuda/lib64' > ~/.theanorc
+	#printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v4/cuda/include\nlibrary_path=/cudnn_v4/cuda/lib64' > ~/.theanorc 
 
 
 # keras:
@@ -118,8 +119,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends cu
 ENV CPATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr/include/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
-ADD cudnn-7.0-linux-x64-v4.0-prod.tgz /cudnn_v4
-
+ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
 
 # config & cleanup:
 #--------------------
