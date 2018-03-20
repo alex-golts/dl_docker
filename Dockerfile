@@ -75,7 +75,8 @@ RUN pip --no-cache-dir install tensorflow-gpu==1.4.1
 RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
 ARG HOME=$HOME
-RUN useradd -u 1000 -g 0 -m dluser
+ARG UID=$UID
+RUN useradd -u $UID -g 0 -m dluser
 RUN usermod -aG sudo dluser
 RUN echo 'dluser:dlpass' | chpasswd
 #RUN useradd dluser -m -G sudo

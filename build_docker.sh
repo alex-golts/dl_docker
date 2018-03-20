@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --build-arg HOME=/home/dluser . -t dl_docker
+docker build --build-arg HOME=/home/dluser --build-arg UID=$UID . -t dl_docker
