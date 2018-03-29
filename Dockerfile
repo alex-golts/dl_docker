@@ -124,5 +124,7 @@ ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
 RUN apt-get install sudo
 
-
+# make byobu use /bin/bash as shell:
+RUN mkdir ~/.byobu && chmod 777 ~/.byobu
+RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf
 
