@@ -126,5 +126,6 @@ RUN apt-get install sudo
 
 # make byobu use /bin/bash as shell:
 RUN mkdir ~/.byobu && chmod 777 ~/.byobu
-RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf
+RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf 
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends imagemagick
