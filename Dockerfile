@@ -129,3 +129,6 @@ RUN mkdir ~/.byobu && chmod 777 ~/.byobu
 RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends imagemagick
+
+# forgot python3 opencv
+RUN pip3 --no-cache-dir install --upgrade opencv-python
