@@ -132,5 +132,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends im
 
 # forgot python3 opencv
 RUN pip3 --no-cache-dir install --upgrade opencv-python
+
+# more stuff:
 RUN pip3 --no-cache-dir install --upgrade scikit-image
 RUN pip --no-cache-dir install --upgrade scikit-image
+RUN pip --no-cache-dir install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
+RUN pip3 --no-cache-dir install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
