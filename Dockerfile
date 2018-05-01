@@ -3,7 +3,8 @@ FROM nvidia/cuda:8.0-cudnn6-devel
 RUN rm -rf /var/lib/apt/lists/* \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
-	apt-get update 
+	apt-get update
+ 
 # tools:
 # -----------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -13,11 +14,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	wget \
 	git \
 	nano \
-	byobu
+	byobu 
 
-# boost:
+# curl and sudo need update:
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl \
+	sudo
+
+
+# libraries:
 #-------------------
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libboost-all-dev
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libboost-all-dev \
+	imagemagick
+
 
 # python:
 # -----------------
@@ -29,6 +38,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	python-opencv \
 	spyder \
 	spyder3
+
 
 RUN pip --no-cache-dir install --upgrade pip \
 	setuptools
@@ -45,7 +55,9 @@ RUN pip --no-cache-dir install --upgrade \
 	xmltodict \
 	easydict \
 	tensorboardX \
-	Pillow
+	Pillow \
+	scikit-image \
+	https://github.com/Lasagne/Lasagne/archive/master.zip
 
 RUN pip3 --no-cache-dir install --upgrade \
 	numpy \
@@ -57,30 +69,38 @@ RUN pip3 --no-cache-dir install --upgrade \
 	xmltodict \
 	easydict \
 	tensorboardX \
-	Pillow
+	Pillow \
+	opencv-python \
+	scikit-image \
+	https://github.com/Lasagne/Lasagne/archive/master.zip
 	
+
 # pytorch:
 #-------------------
 RUN pip --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.3.1-cp27-cp27mu-linux_x86_64.whl \
+	http://download.pytorch.org/whl/cu80/torch-0.4.0-cp27-cp27mu-linux_x86_64.whl \
 	torchvision
 
 RUN pip3 --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.3.1-cp35-cp35m-linux_x86_64.whl \
+	http://download.pytorch.org/whl/cu80/torch-0.4.0-cp35-cp35m-linux_x86_64.whl \
 	torchvision
+
 
 # tensorflow:
 #--------------------
-RUN pip --no-cache-dir install tensorflow-gpu==1.4.1
-RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
+# used 1.4.1 before. now it gives some weird md5 mismatch error, so moved to 1.4.0 =/
 
+RUN pip --no-cache-dir install tensorflow-gpu==1.4.0
+RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.0
+
+# define sudo user:
+#-------------------
 ARG HOME=$HOME
 ARG UID=$UID
 RUN useradd -u $UID -g 0 -m dluser
 RUN usermod -aG sudo dluser
 RUN echo 'dluser:dlpass' | chpasswd
-#RUN useradd dluser -m -G sudo
-#USER dluser
+
 
 # theano:
 #--------------------
@@ -115,26 +135,16 @@ RUN pip3 --no-cache-dir install --upgrade \
 	keras
 
 
-# Other stuff - move to appropriate locations sometime, I put them here just to save time during build:
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl 
+# Set environment variables:
+#-----------------------------
 ENV CPATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr/include/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
-RUN apt-get install sudo
+
 
 # make byobu use /bin/bash as shell:
+#-----------------------------------
 RUN mkdir ~/.byobu && chmod 777 ~/.byobu
 RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf 
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends imagemagick
-
-# forgot python3 opencv
-RUN pip3 --no-cache-dir install --upgrade opencv-python
-
-# more stuff:
-RUN pip3 --no-cache-dir install --upgrade scikit-image
-RUN pip --no-cache-dir install --upgrade scikit-image
-RUN pip --no-cache-dir install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
-RUN pip3 --no-cache-dir install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
