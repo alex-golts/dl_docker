@@ -148,3 +148,9 @@ ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
 RUN mkdir ~/.byobu && chmod 777 ~/.byobu
 RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > ~/.byobu/.tmux.conf 
 
+
+# more stuff - later move them to appropriate places:
+# ---------------------------------------------------
+RUN pip --no-cache-dir install --upgrade tensorboardX
+RUN pip3 --no-cache-dir install --upgrade tensorboardX
+
