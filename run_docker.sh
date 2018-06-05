@@ -22,4 +22,5 @@ nvidia-docker run \
 	-v /home/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
 	--user dluser \
 	--net=host \
+	--shm-size=8G \
 	dl_docker
