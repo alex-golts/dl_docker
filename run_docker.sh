@@ -20,7 +20,8 @@ nvidia-docker run \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v /home/$USER:/home/$USER \
 	-v /home/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
+	-v /media:/media \
 	--user dluser \
 	--net=host \
-	--shm-size=8G \
+	--shm-size=16G \
 	dl_docker
