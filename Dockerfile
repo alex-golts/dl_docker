@@ -155,3 +155,7 @@ RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > 
 RUN pip --no-cache-dir install --upgrade tensorboardX
 RUN pip3 --no-cache-dir install --upgrade tensorboardX
 
+RUN pip --no-cache-dir install --upgrade jupyter
+RUN pip3 --no-cache-dir install --upgrade jupyter
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends firefox
