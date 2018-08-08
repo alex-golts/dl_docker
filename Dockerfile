@@ -106,22 +106,22 @@ RUN echo 'dluser:dlpass' | chpasswd
 #--------------------
 #RUN pip --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
 #RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git#egg=Theano
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-	libblas-dev && \
-	wget -qO- https://github.com/Theano/Theano/archive/rel-0.8.2.tar.gz | tar xz -C ~ && \
-	cd ~/Theano* && \
-	pip --no-cache-dir install . && \
-        pip3 --no-cache-dir install . && \
-    	git clone https://github.com/Theano/libgpuarray ~/gpuarray && \
-	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
-	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
-	make -j"$(nproc)" install && \
-	cd ~/gpuarray && \
-	python setup.py build && \
-	python setup.py install && \
-	python3 setup.py build && \
-	python3 setup.py install && \ 
-	printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v5/cuda/include\nlibrary_path=/cudnn_v5/cuda/lib64' > ~/.theanorc
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+#	libblas-dev && \
+#	wget -qO- https://github.com/Theano/Theano/archive/rel-0.8.2.tar.gz | tar xz -C ~ && \
+#	cd ~/Theano* && \
+#	pip --no-cache-dir install . && \
+#        pip3 --no-cache-dir install . && \
+#    	git clone https://github.com/Theano/libgpuarray ~/gpuarray && \
+#	mkdir -p ~/gpuarray/build && cd ~/gpuarray/build && \
+#	cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
+#	make -j"$(nproc)" install && \
+#	cd ~/gpuarray && \
+#	python setup.py build && \
+#	python setup.py install && \
+#	python3 setup.py build && \
+#	python3 setup.py install && \ 
+#	printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v5/cuda/include\nlibrary_path=/cudnn_v5/cuda/lib64' > ~/.theanorc
 	#printf '[global]\nfloatX = float32\ndevice = gpu0\n\n[dnn]\ninclude_path = /cudnn_v4/cuda/include\nlibrary_path=/cudnn_v4/cuda/lib64' > ~/.theanorc 
 
 
@@ -140,7 +140,7 @@ RUN pip3 --no-cache-dir install --upgrade \
 ENV CPATH=$CPLUS_INCLUDE_PATH:/usr/local/cuda/targets/x86_64-linux/include/:/usr/include/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
 ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/lib/x86_64-linux-gnu
-ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
+#ADD cudnn-8.0-linux-x64-v5.0-ga.tgz /cudnn_v5
 
 
 # make byobu use /bin/bash as shell:
