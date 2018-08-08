@@ -43,6 +43,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN pip --no-cache-dir install --upgrade pip \
 	setuptools
 
+#RUN pip3 --no-cache-dir install --upgrade pip
+
 RUN pip3 --no-cache-dir install --upgrade setuptools
 
 RUN pip --no-cache-dir install --upgrade \
@@ -78,20 +80,19 @@ RUN pip3 --no-cache-dir install --upgrade \
 # pytorch:
 #-------------------
 RUN pip --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.4.0-cp27-cp27mu-linux_x86_64.whl \
+	http://download.pytorch.org/whl/cu80/torch-0.4.1-cp27-cp27mu-linux_x86_64.whl \
 	torchvision
 
 RUN pip3 --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.4.0-cp35-cp35m-linux_x86_64.whl \
+	http://download.pytorch.org/whl/cu80/torch-0.4.1-cp35-cp35m-linux_x86_64.whl \
 	torchvision
 
 
 # tensorflow:
 #--------------------
-# used 1.4.1 before. now it gives some weird md5 mismatch error, so moved to 1.4.0 =/
 
-RUN pip --no-cache-dir install tensorflow-gpu==1.4.0
-RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.0
+RUN pip --no-cache-dir install tensorflow-gpu==1.4.1
+RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
 # define sudo user:
 #-------------------
