@@ -24,5 +24,5 @@ nvidia-docker run \
 	--user dluser \
 	--net=host \
 	--shm-size=16G \
-	--name ${USER}_$(date +%d_%m_%Y) \
+	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
 	dl_docker
