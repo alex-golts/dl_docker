@@ -22,6 +22,7 @@ nvidia-docker run \
 	-v /home/$USER:/home/$USER \
 	-v /home/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
 	-v /media:/media \
+	-v /data/$USER:/data/$USER \
 	--net=host \
 	--shm-size=16G \
 	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
