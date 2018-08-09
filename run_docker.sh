@@ -10,19 +10,19 @@ IP=$(hostname -I|cut -f1 -d ' ')
 #IP_HOST=$(echo $SSH_CLIENT | awk '{ print $1}')
 xhost + $IP
 #xhost + $IP_HOST
-
+#xhost +
 
 nvidia-docker run \
 	-it \
-	-e USER=$USER \
 	-e DISPLAY=$DISPLAY \
 	-e QT_X11_NO_MITSHM=1 \
+	-e LUID=$(id -u) \
+        -e LGID=$(id -g) \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v /home/$USER:/home/$USER \
 	-v /home/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
 	-v /media:/media \
-	--user dluser \
 	--net=host \
 	--shm-size=16G \
 	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
-	dl_docker
+	"$@"

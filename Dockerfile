@@ -96,12 +96,19 @@ RUN pip3 --no-cache-dir install tensorflow-gpu==1.4.1
 
 # define sudo user:
 #-------------------
-ARG HOME=$HOME
-ARG UID=$UID
-RUN useradd -u $UID -g 0 -m dluser
-RUN usermod -aG sudo dluser
-RUN echo 'dluser:dlpass' | chpasswd
-
+#ARG HOME=$HOME
+#ARG UID=$UID
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN useradd -m -s /bin/bash dluser && echo "dluser:dlpass" | chpasswd && adduser dluser sudo
+#RUN useradd -u 1000 -g 0 -m dluser
+#RUN usermod -aG sudo dluser
+#RUN echo 'dluser:dlpass' | chpasswd
+#COPY entrypoint.sh /entrypoint.sh
+WORKDIR /home/dluser
+ENV HOME /home/dluser
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/bin/bash"]
 
 # theano:
 #--------------------
