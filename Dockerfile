@@ -165,4 +165,7 @@ RUN pip3 --no-cache-dir install --upgrade tensorboardX
 RUN pip --no-cache-dir install --upgrade jupyter
 RUN pip3 --no-cache-dir install --upgrade jupyter
 
+RUN pip --no-cache-dir install --upgrade configobj
+RUN pip3 --no-cache-dir install --upgrade configobj
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends firefox
