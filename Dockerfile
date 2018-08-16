@@ -169,3 +169,55 @@ RUN pip --no-cache-dir install --upgrade configobj
 RUN pip3 --no-cache-dir install --upgrade configobj
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends firefox
+
+
+# caffe2 dependencies:
+# --------------------
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	libgoogle-glog-dev \
+	libgtest-dev \
+	libiomp-dev \
+	libleveldb-dev \
+	liblmdb-dev \
+	libopencv-dev \
+	libopenmpi-dev \
+	libsnappy-dev \
+	libprotobuf-dev \
+	openmpi-bin \
+	openmpi-doc \
+	protobuf-compiler \
+	libgflags-dev
+
+RUN pip --no-cache-dir install --upgrade future \
+	protobuf 
+RUN pip3 --no-cache-dir install --upgrade future \
+	protobuf
+
+# Clone Caffe2's source code from our Github repository
+WORKDIR /
+RUN git clone --recursive https://github.com/pytorch/pytorch.git
+WORKDIR /pytorch
+RUN git submodule update --init
+
+# Create a directory to put Caffe2's build files in
+RUN mkdir build 
+WORKDIR build	
+
+# Configure Caffe2's build
+# This looks for packages on your machine and figures out which functionality
+# to include in the Caffe2 installation. The output of this command is very
+# useful in debugging.
+RUN cmake ..
+
+# Compile, link, and install Caffe2
+RUN make install -j20
+
+# Additional caffe2 dependencies:
+RUN pip --no-cache-dir install --upgrade hypothesis==3.40.0 \
+	pydot
+
+RUN pip3 --no-cache-dir install --upgrade hypothesis==3.40.0 \
+	pydot
+
+WORKDIR /
+
