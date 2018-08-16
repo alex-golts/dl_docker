@@ -219,5 +219,19 @@ RUN pip --no-cache-dir install --upgrade hypothesis==3.40.0 \
 RUN pip3 --no-cache-dir install --upgrade hypothesis==3.40.0 \
 	pydot
 
+# Install COCO API:
+WORKDIR /
+RUN git clone https://github.com/cocodataset/cocoapi.git
+WORKDIR /cocoapi/PythonAPI
+RUN make install -j20
+
+# Install Detectron:
+WORKDIR /
+RUN git clone https://github.com/facebookresearch/detectron
+RUN pip install -r /detectron/requirements.txt
+WORKDIR /detectron
+RUN make -j20
+
+
 WORKDIR /
 
