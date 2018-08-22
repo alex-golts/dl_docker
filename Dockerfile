@@ -175,23 +175,25 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fi
 # --------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libgoogle-glog-dev \
-	libgtest-dev \
+	libgtest-dev \ 
 	libiomp-dev \
 	libleveldb-dev \
 	liblmdb-dev \
-	libopencv-dev \
+#	libopencv-dev \
 	libopenmpi-dev \
-	libsnappy-dev \
-	libprotobuf-dev \
-	openmpi-bin \
-	openmpi-doc \
-	protobuf-compiler \
-	libgflags-dev
+        libsnappy-dev \
+        libprotobuf-dev \
+        openmpi-bin \
+        openmpi-doc \
+        protobuf-compiler \
+        libgflags-dev 
 
 RUN pip --no-cache-dir install --upgrade future \
-	protobuf 
+	protobuf \
+	typing 
 RUN pip3 --no-cache-dir install --upgrade future \
-	protobuf
+	protobuf \
+	typing
 
 # Clone Caffe2's source code from our Github repository
 WORKDIR /
