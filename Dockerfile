@@ -173,6 +173,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fi
 
 # caffe2 dependencies:
 # --------------------
+RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libgoogle-glog-dev \
 	libgtest-dev \
