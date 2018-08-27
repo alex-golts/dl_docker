@@ -175,31 +175,37 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fi
 # --------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libgoogle-glog-dev \
-	libgtest-dev \ 
+	libgtest-dev \
 	libiomp-dev \
 	libleveldb-dev \
 	liblmdb-dev \
-#	libopencv-dev \
+	libopencv-dev \
 	libopenmpi-dev \
-        libsnappy-dev \
-        libprotobuf-dev \
-        openmpi-bin \
-        openmpi-doc \
-        protobuf-compiler \
-        libgflags-dev 
+	libsnappy-dev \
+	libprotobuf-dev \
+	openmpi-bin \
+	openmpi-doc \
+	protobuf-compiler \
+	libgflags-dev
 
 RUN pip --no-cache-dir install --upgrade future \
 	protobuf \
-	typing 
+	pyyaml \
+	typing
 RUN pip3 --no-cache-dir install --upgrade future \
 	protobuf \
+	pyyaml \
 	typing
 
 # Clone Caffe2's source code from our Github repository
 WORKDIR /
 RUN git clone --recursive https://github.com/pytorch/pytorch.git
 WORKDIR /pytorch
-RUN git submodule update --init
+# temporary solution. installation worked here and then broke
+RUN git submodule update --init 
+RUN git checkout 238b4b9236c8f0b36667ff9a83ca9125e34e7713
+
+#RUN FULL_CAFFE2=1 python setup.py install
 
 # Create a directory to put Caffe2's build files in
 RUN mkdir build 
@@ -212,27 +218,27 @@ WORKDIR build
 RUN cmake ..
 
 # Compile, link, and install Caffe2
-RUN make install -j20
+RUN make install -j8
 
 # Additional caffe2 dependencies:
 RUN pip --no-cache-dir install --upgrade hypothesis==3.40.0 \
-	pydot
+	pydot 
 
 RUN pip3 --no-cache-dir install --upgrade hypothesis==3.40.0 \
-	pydot
+	pydot 
 
 # Install COCO API:
 WORKDIR /
 RUN git clone https://github.com/cocodataset/cocoapi.git
 WORKDIR /cocoapi/PythonAPI
-RUN make install -j20
+RUN make install -j8
 
 # Install Detectron:
 WORKDIR /
 RUN git clone https://github.com/facebookresearch/detectron
 RUN pip install -r /detectron/requirements.txt
 WORKDIR /detectron
-RUN make -j20
+RUN make -j8
 
 
 WORKDIR /
