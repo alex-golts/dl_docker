@@ -200,26 +200,26 @@ RUN pip3 --no-cache-dir install --upgrade future \
 
 # Clone Caffe2's source code from our Github repository
 WORKDIR /
-RUN git clone --recursive https://github.com/pytorch/pytorch.git
+RUN git clone https://github.com/pytorch/pytorch.git
 WORKDIR /pytorch
 # temporary solution. installation worked here and then broke
-RUN git submodule update --init 
-RUN git checkout 238b4b9236c8f0b36667ff9a83ca9125e34e7713
+RUN git submodule update --init --recursive 
+#RUN git checkout 238b4b9236c8f0b36667ff9a83ca9125e34e7713
 
-#RUN FULL_CAFFE2=1 python setup.py install
+RUN FULL_CAFFE2=1 python setup.py install
 
 # Create a directory to put Caffe2's build files in
-RUN mkdir build 
-WORKDIR build	
+#RUN mkdir build 
+#WORKDIR build	
 
 # Configure Caffe2's build
 # This looks for packages on your machine and figures out which functionality
 # to include in the Caffe2 installation. The output of this command is very
 # useful in debugging.
-RUN cmake ..
+#RUN cmake ..
 
 # Compile, link, and install Caffe2
-RUN make install -j8
+#RUN make install -j8
 
 # Additional caffe2 dependencies:
 RUN pip --no-cache-dir install --upgrade hypothesis==3.40.0 \
@@ -244,3 +244,15 @@ RUN make -j8
 
 WORKDIR /
 
+# Install pytorch-retinanet dependencies
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	tk-dev \
+	python-tk
+
+RUN pip3 --no-cache-dir install --upgrade cffi \
+	pycocotools \
+	requests 
+ 
+RUN pip --no-cache-dir install --upgrade cffi \
+	pycocotools \
+	requests
