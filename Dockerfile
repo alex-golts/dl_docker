@@ -189,3 +189,13 @@ RUN pip3 --no-cache-dir install --upgrade \
 RUN pip --no-cache-dir install --upgrade ConfigArgParse
 RUN pip3 --no-cache-dir install --upgrade ConfigArgParse
 
+# install dlib
+WORKDIR /
+RUN git clone https://github.com/davisking/dlib.git
+WORKDIR dlib
+RUN python3 setup.py install
+WORKDIR /
+RUN rm -rf dlib
+RUN pip3 --no-cache-dir install --upgrade face_recognition
+
+
