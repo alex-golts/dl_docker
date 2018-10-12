@@ -10,9 +10,12 @@ docker run \
 	-it \
 	-e USER=$USER \
 	-e DISPLAY=$IP:0 \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-e QT_X11_NO_MITSHM=1 \
-	-v /$HOME:/home/$USER \
-	--user dluser \
+	-e LUID=$(id -u) \
+        -e LGID=$(id -g) \
+	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v /Users/$USER:/home/$USER \
+	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
 	dl_docker
 
+#	-v /Users/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
