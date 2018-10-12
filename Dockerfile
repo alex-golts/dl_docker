@@ -198,4 +198,37 @@ WORKDIR /
 RUN rm -rf dlib
 RUN pip3 --no-cache-dir install --upgrade face_recognition
 
+# install caffe:
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	libprotobuf-dev \
+	libleveldb-dev \
+	libsnappy-dev \
+	libopencv-dev \
+	libhdf5-serial-dev \
+	protobuf-compiler \
+	libatlas-base-dev
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	libgflags-dev \
+	libgoogle-glog-dev \
+	liblmdb-dev
+
+
+WORKDIR /
+RUN git clone https://github.com/BVLC/caffe.git
+WORKDIR caffe
+RUN cp Makefile.config.example Makefile.config
+# change options in Makefile.config programmatically:
+RUN sed -i -e 's/# USE_CUDNN := 1/USE_CUDNN := 1/g' Makefile.config
+RUN sed -i -e 's/# WITH_PYTHON_LAYER := 1/WITH_PYTHON_LAYER := 1/g' Makefile.config
+RUN sed -i -e 's#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial /usr/local/lib/python2.7/dist-packages/numpy/core/include#g' Makefile.config
+RUN sed -i -e 's#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5 /usr/lib/x86_64-linux-gnu/hdf5/serial#g' Makefile.config
+
+RUN make all -j8
+RUN make test -j8
+#RUN make runtest -j8
+RUN make pycaffe
+
+ENV PYTHONPATH=${PYTHONPATH}:/caffe/python
+
 
