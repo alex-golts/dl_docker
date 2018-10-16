@@ -199,6 +199,7 @@ RUN rm -rf dlib
 RUN pip3 --no-cache-dir install --upgrade face_recognition
 
 # install caffe:
+RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	libprotobuf-dev \
 	libleveldb-dev \
