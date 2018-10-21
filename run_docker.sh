@@ -26,4 +26,4 @@ nvidia-docker run \
 	--net=host \
 	--shm-size=16G \
 	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
-	"$@"
+	"$@" bash -c "git config --global user.name 'Alex Golts' && git config --global user.email 'alex@golts.net' && bash"
