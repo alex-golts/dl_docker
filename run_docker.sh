@@ -7,10 +7,11 @@
 #IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 
 IP=$(hostname -I|cut -f1 -d ' ')
-#IP_HOST=$(echo $SSH_CLIENT | awk '{ print $1}')
+
 xhost + $IP
-#xhost + $IP_HOST
-#xhost +
+
+git_name=$(git config --global user.name)
+git_email=$(git config --global user.email)
 
 nvidia-docker run \
 	-it \
@@ -26,4 +27,4 @@ nvidia-docker run \
 	--net=host \
 	--shm-size=16G \
 	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
-	"$@" bash -c "git config --global user.name 'Alex Golts' && git config --global user.email 'alex@golts.net' && bash"
+	"$@" bash -c "git config --global user.name '$git_name' && git config --global user.email '$git_email' && bash"
