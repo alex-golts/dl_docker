@@ -232,4 +232,5 @@ RUN make pycaffe
 
 ENV PYTHONPATH=${PYTHONPATH}:/caffe/python
 
-
+RUN pip --no-cache-dir install --upgrade GPUtil
+RUN pip3 --no-cache-dir install --upgrade GPUtil
