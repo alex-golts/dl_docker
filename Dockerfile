@@ -234,3 +234,6 @@ ENV PYTHONPATH=${PYTHONPATH}:/caffe/python
 
 RUN pip --no-cache-dir install --upgrade GPUtil
 RUN pip3 --no-cache-dir install --upgrade GPUtil
+
+RUN pip --no-cache-dir install --upgrade tqdm
+RUN pip3 --no-cache-dir install --upgrade tqdm
