@@ -237,3 +237,15 @@ RUN pip3 --no-cache-dir install --upgrade GPUtil
 
 RUN pip --no-cache-dir install --upgrade tqdm
 RUN pip3 --no-cache-dir install --upgrade tqdm
+
+# build regularized losses dependencies
+WORKDIR /
+RUN git clone https://github.com/meng-tang/rloss.git
+WORKDIR rloss/pytorch/wrapper/bilateralfilter
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        swig
+RUN swig -python -c++ bilateralfilter.i
+RUN python3 setup.py build
+WORKDIR /
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	python3-tk
