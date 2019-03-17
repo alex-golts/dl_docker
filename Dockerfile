@@ -249,3 +249,10 @@ RUN python3 setup.py build
 WORKDIR /
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	python3-tk
+
+# pyrender
+RUN pip --no-cache-dir install --upgrade trimesh \
+					pyrender
+RUN pip3 --no-cache-dir install --upgrade trimesh \
+					pyrender
+
