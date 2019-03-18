@@ -224,6 +224,9 @@ RUN sed -i -e 's/# USE_CUDNN := 1/USE_CUDNN := 1/g' Makefile.config
 RUN sed -i -e 's/# WITH_PYTHON_LAYER := 1/WITH_PYTHON_LAYER := 1/g' Makefile.config
 RUN sed -i -e 's#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial /usr/local/lib/python2.7/dist-packages/numpy/core/include#g' Makefile.config
 RUN sed -i -e 's#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5 /usr/lib/x86_64-linux-gnu/hdf5/serial#g' Makefile.config
+# remove unsupported compute_20 cuda arch.
+RUN sed -i -e 's/-gencode arch=compute_20,code=sm_20//g' Makefile.config
+RUN sed -i -e 's/-gencode arch=compute_20,code=sm_21//g' Makefile.config
 
 RUN make all -j8
 RUN make test -j8
