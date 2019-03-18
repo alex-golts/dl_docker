@@ -215,6 +215,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	liblmdb-dev
 
 
+# install cudnn manually:
+WORKDIR /
+RUN wget https://www.dropbox.com/s/gop6g6j134w0m86/cudnn-10.1-linux-x64-v7.5.0.56.tgz
+RUN tar -xvzf cudnn-10.1-linux-x64-v7.5.0.56.tgz
+RUN rm -rf cudnn-10.1-linux-x64-v7.5.0.56.tgz
+RUN mv /cuda/include/* /usr/include
+RUN mv /cuda/lib64/* /usr/lib/x86_64-linux-gnu
+
 WORKDIR /
 RUN git clone https://github.com/BVLC/caffe.git
 WORKDIR caffe
@@ -227,6 +235,7 @@ RUN sed -i -e 's#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib#LIBRARY_DIRS := $(
 # remove unsupported compute_20 cuda arch.
 RUN sed -i -e 's/-gencode arch=compute_20,code=sm_20//g' Makefile.config
 RUN sed -i -e 's/-gencode arch=compute_20,code=sm_21//g' Makefile.config
+
 
 RUN make all -j8
 RUN make test -j8
