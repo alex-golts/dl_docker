@@ -1,4 +1,4 @@
-FROM nvidia/cudagl:9.0-devel-ubuntu16.04
+FROM nvidia/cudagl:10.1-devel-ubuntu18.04
 
 RUN rm -rf /var/lib/apt/lists/* \
            /etc/apt/sources.list.d/cuda.list \
@@ -80,12 +80,12 @@ RUN pip3 --no-cache-dir install --upgrade \
 # pytorch:
 #-------------------
 RUN pip --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.4.1-cp27-cp27mu-linux_x86_64.whl \
-	torchvision
+	https://download.pytorch.org/whl/cu100/torch-1.1.0-cp27-cp27mu-linux_x86_64.whl \
+	https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp27-cp27mu-linux_x86_64.whl
 
 RUN pip3 --no-cache-dir install --upgrade \
-	http://download.pytorch.org/whl/cu80/torch-0.4.1-cp35-cp35m-linux_x86_64.whl \
-	torchvision
+	https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
+	https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
 
 
 # tensorflow:
@@ -162,6 +162,8 @@ RUN printf 'set -g default-shell /bin/bash\nset -g default-command /bin/bash' > 
 RUN pip --no-cache-dir install --upgrade tensorboardX
 RUN pip3 --no-cache-dir install --upgrade tensorboardX
 
+RUN pip --no-cache-dir install --ignore-installed pyzmq
+RUN pip3 --no-cache-dir install --ignore-installed pyzmq
 RUN pip --no-cache-dir install --upgrade jupyter
 RUN pip3 --no-cache-dir install --upgrade jupyter
 
