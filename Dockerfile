@@ -225,26 +225,27 @@ RUN rm -rf cudnn-10.1-linux-x64-v7.5.0.56.tgz
 RUN mv /cuda/include/* /usr/include
 RUN mv /cuda/lib64/* /usr/lib/x86_64-linux-gnu
 
-WORKDIR /
-RUN git clone https://github.com/BVLC/caffe.git
-WORKDIR caffe
-RUN cp Makefile.config.example Makefile.config
-# change options in Makefile.config programmatically:
-RUN sed -i -e 's/# USE_CUDNN := 1/USE_CUDNN := 1/g' Makefile.config
-RUN sed -i -e 's/# WITH_PYTHON_LAYER := 1/WITH_PYTHON_LAYER := 1/g' Makefile.config
-RUN sed -i -e 's#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial /usr/local/lib/python2.7/dist-packages/numpy/core/include#g' Makefile.config
-RUN sed -i -e 's#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5 /usr/lib/x86_64-linux-gnu/hdf5/serial#g' Makefile.config
-# remove unsupported compute_20 cuda arch.
-RUN sed -i -e 's/-gencode arch=compute_20,code=sm_20//g' Makefile.config
-RUN sed -i -e 's/-gencode arch=compute_20,code=sm_21//g' Makefile.config
+# CAFFE INSTALLATION - stopped working when moved from cudagl 9 on ubuntu 16.04 to cudagl 10 on ubuntu 18.04
+#WORKDIR /
+#RUN git clone https://github.com/BVLC/caffe.git
+#WORKDIR caffe
+#RUN cp Makefile.config.example Makefile.config
+## change options in Makefile.config programmatically:
+#RUN sed -i -e 's/# USE_CUDNN := 1/USE_CUDNN := 1/g' Makefile.config
+#RUN sed -i -e 's/# WITH_PYTHON_LAYER := 1/WITH_PYTHON_LAYER := 1/g' Makefile.config
+#RUN sed -i -e 's#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include#INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/#include /usr/include/hdf5/serial /usr/local/lib/python2.7/dist-packages/numpy/core/include#g' Makefile.config
+#RUN sed -i -e 's#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib#LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib/#x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/hdf5 /usr/lib/x86_64-linux-gnu/hdf5/serial#g' Makefile.config
+## remove unsupported compute_20 cuda arch.
+#RUN sed -i -e 's/-gencode arch=compute_20,code=sm_20//g' Makefile.config
+#RUN sed -i -e 's/-gencode arch=compute_20,code=sm_21//g' Makefile.config
 
 
-RUN make all -j8
-RUN make test -j8
-#RUN make runtest -j8
-RUN make pycaffe
+#RUN make all -j8
+#RUN make test -j8
+##RUN make runtest -j8
+#RUN make pycaffe
 
-ENV PYTHONPATH=${PYTHONPATH}:/caffe/python
+#ENV PYTHONPATH=${PYTHONPATH}:/caffe/python
 
 RUN pip --no-cache-dir install --upgrade GPUtil
 RUN pip3 --no-cache-dir install --upgrade GPUtil
