@@ -267,7 +267,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 # pyrender
 RUN pip --no-cache-dir install --upgrade trimesh \
-					pyrender
+					pyrender \
+					shapely
 RUN pip3 --no-cache-dir install --upgrade trimesh \
-					pyrender
+					pyrender \
+					shapely
 
