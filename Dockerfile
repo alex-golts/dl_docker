@@ -273,3 +273,6 @@ RUN pip3 --no-cache-dir install --upgrade trimesh \
 					pyrender \
 					shapely
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	freeglut3-dev
+
