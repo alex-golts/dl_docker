@@ -276,3 +276,5 @@ RUN pip3 --no-cache-dir install --upgrade trimesh \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	freeglut3-dev
 
+RUN pip3 --no-cache-dir install --upgrade fastai
+
