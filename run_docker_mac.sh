@@ -19,6 +19,7 @@ docker run \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v /Users/$USER:/home/$USER \
 	--name ${USER}_$(date +%d_%m_%Y_%H_%M_%S) \
+	--rm \
 	"$@" bash -c "git config --global user.name '$git_name' && git config --global user.email '$git_email' && bash"
 
 #	-v /Users/$USER/.Xauthority:/home/dluser/.Xauthority:rw \
