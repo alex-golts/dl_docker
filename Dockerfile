@@ -278,3 +278,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 RUN pip3 --no-cache-dir install --upgrade fastai
 RUN pip3 --no-cache-dir install --upgrade spyder_kernels
+
+# additional hpatches dependencies
+RUN pip3 --no-cache-dir install --upgrade dill tabulate
