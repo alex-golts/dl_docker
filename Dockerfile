@@ -281,3 +281,7 @@ RUN pip3 --no-cache-dir install --upgrade spyder_kernels
 
 # additional hpatches dependencies
 RUN pip3 --no-cache-dir install --upgrade dill tabulate
+
+# d2l book
+RUN pip3 --no-cache-dir install --upgrade mxnet==1.6.0
+RUN pip3 --no-cache-dir install --upgrade d2l -f https://d2l.ai/whl.html
